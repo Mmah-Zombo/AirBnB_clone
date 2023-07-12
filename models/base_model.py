@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Defines the base model that defines all common methods for other classes"""
+
 import uuid
 from datetime import datetime
 
@@ -24,3 +25,8 @@ class BaseModel:
 
     def to_dict(self):
         """returns a dictionary with all keys/values of __dict__"""
+        ndict = self.__dict__.copy()
+        ndict["created_at"] = self.created_at.isoformat()
+        ndict["updated_at"] = self.updated_at.isoformat()
+        ndict["__class__"] = self.__class__.__name__
+        return ndict
