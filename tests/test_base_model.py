@@ -14,7 +14,7 @@ class TestBaseModel_Save(unittest.TestCase):
     def test_save_one(self):
         """tests if the save method works for a normal case"""
         obj = BaseModel()
-        sleep(1)
+        sleep(0.05)
         first_update_time = obj.updated_at
         obj.save()
         self.assertLess(first_update_time, obj.updated_at)
