@@ -1,18 +1,32 @@
 #!/usr/bin/python3
 """Defines the base model that defines all common methods for other classes"""
-
+import models
 import uuid
 from datetime import datetime
 
 
 class BaseModel:
     """Represents the base model of the airbnb project"""
-    def __init__(self):
-        """Initializes a base model"""
-
+    def __init__(self, *args, **kwargs):
+        """Initializes a base model
+        
+        Args:
+        *args (any): unused
+        **kwargs (dict): dictionary of attributes
+        """
+        tformat = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strftime(v, tformat)
+                else:
+                    self.__dict__[k] = v
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the class"""
@@ -21,7 +35,7 @@ class BaseModel:
 
     def save(self):
         """updates the updated_at attribute with the current datetime"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.today()
 
     def to_dict(self):
         """returns a dictionary with all keys/values of __dict__"""
