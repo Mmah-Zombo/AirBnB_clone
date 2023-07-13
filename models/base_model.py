@@ -19,14 +19,13 @@ class BaseModel:
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
 
-        if len(kwargs) != 0:
-            for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_at":
-                    self.__dict__[k] = datetime.strftime(v, tformat)
-                else:
-                    self.__dict__[k] = v
-        else:
-            models.storage.new(self)
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, tformat)
+                setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the class"""
