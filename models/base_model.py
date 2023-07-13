@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Defines the base model that defines all common methods for other classes"""
-import models
 import uuid
 from datetime import datetime
 
@@ -9,7 +8,7 @@ class BaseModel:
     """Represents the base model of the airbnb project"""
     def __init__(self, *args, **kwargs):
         """Initializes a base model
-        
+
         Args:
         *args (any): unused
         **kwargs (dict): dictionary of attributes
