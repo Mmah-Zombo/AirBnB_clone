@@ -2,7 +2,6 @@
 """Defines the base model that defines all common methods for other classes"""
 import uuid
 from datetime import datetime
-from models.engine.file_storage import storage
 
 
 class BaseModel:
@@ -26,8 +25,6 @@ class BaseModel:
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, tformat)
                 setattr(self, key, value)
-        else:
-            storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the class"""
@@ -37,7 +34,6 @@ class BaseModel:
     def save(self):
         """updates the updated_at attribute with the current datetime"""
         self.updated_at = datetime.today()
-        storage.save()
 
     def to_dict(self):
         """returns a dictionary with all keys/values of __dict__"""
