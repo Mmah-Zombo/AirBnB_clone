@@ -1,11 +1,15 @@
 #!/usr/bin/python3
 """Contains the file storage class"""
 import json
-import os
 
 
 class FileStorage:
-    "the file storage class"
+    """the file storage class
+    
+    Attributes:
+    __file_path (str): the path to the file and its name
+    __objects (str): a dictionary of instatiated objects.
+    """
     __file_path = "file.json"
     __objects = {}
 
@@ -24,19 +28,18 @@ class FileStorage:
         data = {}
         for key, obj in self.__objects.items():
             data[key] = obj.to_dict()
-            
+
         with open("file.json", "w") as file:
             json.dump(data, file)
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path) as file:
-                data = json.load(file)
-                for key, obj_data in data.items():
+            with open(self.__file_path, 'r') as file:
+                obj_dict = json.load(file)
+                for key, value in obj_dict.items():
                     class_name, obj_id = key.split('.')
-                    class_obj = eval(class_name)
-                    instance = class_obj(**obj_data)
-                    self.__objects[key] = instance
+                    class_ = eval(class_name)
+                    self.__objects[key] = class_(**value)
         except FileNotFoundError:
             pass
