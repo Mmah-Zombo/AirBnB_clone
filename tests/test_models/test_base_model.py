@@ -4,6 +4,7 @@ import unittest
 from datetime import datetime
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
     """Unittesting for each method and attribute of the BaseModel"""
     def test_save_updates_updated_at(self):
