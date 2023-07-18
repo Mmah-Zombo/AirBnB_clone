@@ -14,19 +14,19 @@ class HBNBCommand(cmd.Cmd):
         """Called when an empty line is entered. Does nothing."""
         pass
 
-    def quit(self, arg):
+    def do_quit(self, arg):
         """Exit the program.
         Usage: quit
         """
         return True
 
-    def EOF(self, arg):
+    def do_EOF(self, arg):
         """Exit the program using EOF (Ctrl+D).
         """
         print()
         return True
 
-    def help(self, arg):
+    def do_help(self, arg):
         """List available commands with "help"
         or detailed help with "help cmd".
         Usage: help [cmd]
@@ -37,8 +37,5 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    # Initialize FileStorage
-    storage.reload()
-
     # Start the command interpreter
     HBNBCommand().cmdloop()
