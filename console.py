@@ -27,12 +27,14 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_help(self, arg):
-        """List available commands with "help" or detailed help with "help cmd".
+        """List available commands with "help"
+        or detailed help with "help cmd".
         Usage: help [cmd]
         """
         cmd.Cmd.do_help(self, arg)
 
     # Define additional commands here (e.g., create, show, update, destroy)
+
 
 if __name__ == "__main__":
     # Initialize FileStorage
