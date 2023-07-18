@@ -14,19 +14,19 @@ class HBNBCommand(cmd.Cmd):
         """Called when an empty line is entered. Does nothing."""
         pass
 
-    def do_quit(self, arg):
+    def quit(self, arg):
         """Exit the program.
         Usage: quit
         """
         return True
 
-    def do_EOF(self, arg):
+    def EOF(self, arg):
         """Exit the program using EOF (Ctrl+D).
         """
         print()
         return True
 
-    def do_help(self, arg):
+    def help(self, arg):
         """List available commands with "help"
         or detailed help with "help cmd".
         Usage: help [cmd]
