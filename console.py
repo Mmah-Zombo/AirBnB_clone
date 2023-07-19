@@ -22,15 +22,6 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing when an empty line is entered."""
         pass
 
-    def do_save(self, arg):
-        """Save command to save data."""
-        # Implement your save logic here
-        pass
-
-    def emptyline(self):
-        """Do nothing when an empty line is entered."""
-        pass
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
