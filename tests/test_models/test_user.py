@@ -1,129 +1,61 @@
 #!/usr/bin/python3
-"""Contains the entry point of the command interpreter."""
+"""Unittests for the User class"""
 
-import cmd
-import shlex
-from models.base_model import BaseModel
-from models.user import User  # Import User class
-from models import storage
+import unittest
+from models.user import User
 
 
-class HBNBCommand(cmd.Cmd):
-    """Command interpreter class."""
+class TestUser(unittest.TestCase):
+    """Unittesting for the User class"""
 
-    prompt = '(hbnb) '
+    def setUp(self):
+        """Set up test fixtures"""
+        self.user = User()
 
-    def do_quit(self, arg):
-        """Exit the command interpreter."""
-        return True
+    def test_attribute_default_values(self):
+        """Test User attribute default values"""
+        self.assertEqual(self.user.email, "")
+        self.assertEqual(self.user.password, "")
+        self.assertEqual(self.user.first_name, "")
+        self.assertEqual(self.user.last_name, "")
 
-    def do_EOF(self, arg):
-        """Exit the command interpreter on EOF (Ctrl+D)."""
-        print()
-        return True
+    def test_email_attribute(self):
+        """Test User email attribute"""
+        self.assertTrue(hasattr(self.user, 'email'))
+        self.assertEqual(self.user.email, "")
 
-    def emptyline(self):
-        """Do nothing when an empty line is entered."""
-        pass
+    def test_password_attribute(self):
+        """Test User password attribute"""
+        self.assertTrue(hasattr(self.user, 'password'))
+        self.assertEqual(self.user.password, "")
 
-    def help_quit(self):
-        """Display help message for the quit command."""
-        print("Quit command to exit the command interpreter.")
+    def test_first_name_attribute(self):
+        """Test User first_name attribute"""
+        self.assertTrue(hasattr(self.user, 'first_name'))
+        self.assertEqual(self.user.first_name, "")
 
-    def help_EOF(self):
-        """Display help message for the EOF (Ctrl+D) command."""
-        print("Exit the command interpreter on EOF (Ctrl+D).")
+    def test_last_name_attribute(self):
+        """Test User last_name attribute"""
+        self.assertTrue(hasattr(self.user, 'last_name'))
+        self.assertEqual(self.user.last_name, "")
 
-    def help_help(self):
-        """Display help message for the help command."""
-        print("Show help message for the specified command or list \
-              available commands.")
+    def test_to_dict_method(self):
+        """Test the to_dict method"""
+        user_dict = self.user.to_dict()
+        self.assertIsInstance(user_dict, dict)
+        self.assertEqual(user_dict['__class__'], 'User')
+        self.assertTrue('id' in user_dict)
+        self.assertTrue('created_at' in user_dict)
+        self.assertTrue('updated_at' in user_dict)
 
-    def do_create(self, arg):
-        """Create a new instance of BaseModel, save it, and print its id."""
-        args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
-            print("** class doesn't exist **")
-        else:
-            new_obj = BaseModel() if args[0] == "BaseModel" else User()
-            new_obj.save()
-            print(new_obj.id)
-
-    def do_show(self, arg):
-        """Show the string representation of an instance \
-            based on the class name and id."""
-        args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
-            print("** class doesn't exist **")
-        elif len(args) < 2:
-            print("** instance id missing **")
-        else:
-            key = "{}.{}".format(args[0], args[1])
-            objects = storage.all()
-            if key in objects:
-                print(objects[key])
-            else:
-                print("** no instance found **")
-
-    def do_destroy(self, arg):
-        """Deletes an instance based on the class name and \
-            id (save the change into the JSON file)."""
-        args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
-            print("** class doesn't exist **")
-        elif len(args) < 2:
-            print("** instance id missing **")
-        else:
-            key = "{}.{}".format(args[0], args[1])
-            objects = storage.all()
-            if key in objects:
-                del objects[key]
-                storage.save()
-            else:
-                print("** no instance found **")
-
-    def do_all(self, arg):
-        """Prints all string representation of all instances \
-            based or not on the class name."""
-        objects = storage.all()
-        args = shlex.split(arg)
-        if not args or args[0] in ["BaseModel", "User"]:
-            print([str(obj) for obj in objects.values()])
-        else:
-            print("** class doesn't exist **")
-
-    def do_update(self, arg):
-        """Updates an instance based on the class name and \
-            id by adding or updating attribute."""
-        args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
-        elif args[0] not in ["BaseModel", "User"]:
-            print("** class doesn't exist **")
-        elif len(args) < 2:
-            print("** instance id missing **")
-        elif len(args) < 3:
-            print("** attribute name missing **")
-        elif len(args) < 4:
-            print("** value missing **")
-        else:
-            key = "{}.{}".format(args[0], args[1])
-            objects = storage.all()
-            if key in objects:
-                obj = objects[key]
-                attr_name = args[2]
-                attr_value = args[3]
-                setattr(obj, attr_name, attr_value)
-                storage.save()
-            else:
-                print("** no instance found **")
+    def test_str_representation(self):
+        """Test the __str__ method"""
+        user_str = str(self.user)
+        class_name = self.user.__class__.__name__
+        expected_str = "[{}] ({}) {}".format(class_name,
+                                             self.user.id, self.user.__dict__)
+        self.assertEqual(user_str, expected_str)
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    unittest.main()
