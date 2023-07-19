@@ -1,4 +1,5 @@
-# console.py
+#!/usr/bin/python3
+"""the console"""
 
 import cmd
 import sys
@@ -10,7 +11,9 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
+    """the console class"""
     prompt = "(hbnb) "
 
     def emptyline(self):
@@ -109,7 +112,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        print([str(obj) for key, obj in objects.items() if class_name == key.split(".")[0]])
+        print([str(obj) for key, obj in objects.items() if
+               class_name == key.split(".")[0]])
 
     def do_update(self, arg):
         """Update an instance"""
@@ -149,6 +153,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """Default behavior for unknown commands"""
         print("*** Unknown syntax: {}".format(line))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
