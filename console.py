@@ -11,12 +11,12 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
-        return True
+        exit()
 
     def do_EOF(self, arg):
         """Exit the command interpreter on EOF (Ctrl+D)."""
         print()
-        return True
+        exit()
 
     def emptyline(self):
         """Do nothing when an empty line is entered."""
