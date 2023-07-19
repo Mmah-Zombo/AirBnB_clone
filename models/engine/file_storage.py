@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Contains the file storage class"""
 import json
+import os
 from models.base_model import BaseModel
 
 
@@ -35,12 +36,9 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
-        try:
-            with open(self.__file_path, 'r') as file:
-                obj_dict = json.load(file)
-                for key, value in obj_dict.items():
-                    class_name, obj_id = key.split('.')
-                    class_ = eval(class_name)
-                    self.__objects[key] = class_(**value)
-        except FileNotFoundError:
-            pass
+        if (os.path.isfile(FileStorage.__file_path)):
+            with open(FileStorage.__file_path, 'r', encoding="utf-8") as fname:
+                l_json = json.load(fname)
+                for key, val in l_json.items():
+                    FileStorage.__objects[key] = eval(
+                        val['__class__'])(**val)
