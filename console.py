@@ -1,27 +1,32 @@
 #!/usr/bin/python3
-"""Contains the entry point of the command interpreter."""
-
+""" Console Module """
 import cmd
 
 
 class HBNBCommand(cmd.Cmd):
-    """Command interpreter class."""
+    """ Contains the functionality for the HBNB console"""
+    prompt = '(hbnb)'
 
-    prompt = '(hbnb) '
-
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
+    def do_quit(self, command):
+        """ Method to exit the HBNB console"""
         exit()
+
+    def help_quit(self):
+        """ Prints the help documentation for quit  """
+        print("Exits the program with formatting")
 
     def do_EOF(self, arg):
-        """Exit the command interpreter on EOF (Ctrl+D)."""
-        print()
+        """ Handles EOF to exit program """
         exit()
 
+    def help_EOF(self):
+        """ Prints the help documentation for EOF """
+        print("Exits the program without formatting")
+
     def emptyline(self):
-        """Do nothing when an empty line is entered."""
+        """ Overrides the emptyline method of CMD """
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
