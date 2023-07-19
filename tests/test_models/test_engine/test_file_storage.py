@@ -49,7 +49,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(f"BaseModel.{obj.id}", all_objects)
         self.assertEqual(all_objects[f"BaseModel.{obj.id}"], obj)
 
-    def test_save_reload(self):
+    def test_reload(self):
         """Test the save and reload methods of FileStorage."""
         # Add a new object and save it
         obj = BaseModel()
@@ -64,7 +64,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(f"BaseModel.{obj.id}", all_objects)
         self.assertEqual(all_objects[f"BaseModel.{obj.id}"], obj)
 
-    def test_save_existing_file(self):
+    def test_save(self):
         """Test saving to an existing JSON file."""
         # Save initial data
         obj1 = BaseModel()
