@@ -8,10 +8,11 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """Unittesting for each method and attribute of the BaseModel"""
     def test_save_updates_updated_at(self):
-        obj = BaseModel()
-        original_updated_at = obj.updated_at
-        obj.save()
-        self.assertNotEqual(obj.updated_at, original_updated_at)
+        with patch('models.engine.file_storage.FileStorage.save'):
+            obj = BaseModel()
+            original_updated_at = obj.updated_at
+            obj.save()
+            self.assertNotEqual(obj.updated_at, original_updated_at)
 
     def test_to_dict_returns_dict_representation(self):
         obj = BaseModel()
