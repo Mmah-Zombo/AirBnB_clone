@@ -43,7 +43,34 @@ class TestHBnBConsole(unittest.TestCase):
         output = self.console_output.getvalue().strip()
         self.assertTrue(obj.id in output)
 
-    # Add similar tests for other commands (destroy, all, count, update, etc.)
+    def test_destroy(self):
+        # Test destroy command
+        obj = BaseModel()
+        with patch('sys.stdin', StringIO(f"destroy BaseModel {obj.id}\n")):
+            self.console.cmdloop()
+        obj_key = f"{type(obj).__name__}.{obj.id}"
+        self.assertNotIn(obj_key, storage.all())
+
+    def test_all(self):
+        # Test all command
+        with patch('sys.stdin', StringIO("all\n")):
+            self.console.cmdloop()
+        output = self.console_output.getvalue().strip()
+        self.assertIn("BaseModel", output)
+
+    def test_count(self):
+        # Test count command
+        with patch('sys.stdin', StringIO("BaseModel.count()\n")):
+            self.console.cmdloop()
+        output = self.console_output.getvalue().strip()
+        self.assertEqual(output, "1")
+
+    def test_update(self):
+        # Test update command
+        obj = BaseModel()
+        with patch('sys.stdin', StringIO(f"update BaseModel {obj.id} name 'New Name'\n")):
+            self.console.cmdloop()
+        self.assertEqual(obj.name, "New Name")
 
     def test_quit(self):
         # Test quit command
@@ -56,6 +83,19 @@ class TestHBnBConsole(unittest.TestCase):
         with self.assertRaises(SystemExit):
             with patch('sys.stdin', StringIO("EOF\n")):
                 self.console.cmdloop()
+
+    def test_empty_line(self):
+        # Test empty line command
+        with patch('sys.stdin', StringIO("\n")):
+            self.console.cmdloop()
+
+    def test_help(self):
+        # Test help command
+        with patch('sys.stdin', StringIO("help\n")):
+            self.console.cmdloop()
+
+    # Add similar tests for other commands (count, update, etc.)
+    # Test all classes (User, State, City, Place, Amenity, Review) in the same way as BaseModel
 
 if __name__ == "__main__":
     unittest.main()
