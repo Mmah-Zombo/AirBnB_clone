@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import cmd
+"""hii"""
 
 class HBNBCommand(cmd.Cmd):
+    """hiii"""
     prompt = '(hbnb) '
 
     def do_quit(self, arg):
