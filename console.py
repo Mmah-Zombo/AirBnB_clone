@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import cmd
 """hii"""
+import cmd
+
 
 class HBNBCommand(cmd.Cmd):
     """hiii"""
