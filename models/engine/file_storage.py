@@ -31,24 +31,9 @@ class FileStorage:
             with open(FileStorage.__file_path, "r") as file:
                 data = json.load(file)
                 from models.base_model import BaseModel
-                from models.state import State
-                from models.city import City
-                from models.amenity import Amenity
-                from models.place import Place
-                from models.review import Review
-
-                class_map = {
-                    "BaseModel": BaseModel,
-                    "State": State,
-                    "City": City,
-                    "Amenity": Amenity,
-                    "Place": Place,
-                    "Review": Review
-                }
-
                 for key, value in data.items():
                     class_name, obj_id = key.split(".")
-                    class_ = class_map.get(class_name, None)
+                    class_ = BaseModel if class_name == "BaseModel" else None
                     if class_:
                         obj = class_(**value)
                         FileStorage.__objects[key] = obj
